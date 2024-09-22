@@ -1,0 +1,25 @@
+[package]
+name = "rhc"
+description = "Compiler for RH Programming Language."
+authors = ["DevCheckOG [https://github.com/DevCheckOG]"]
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+llvmenv = "*"
+llvm-sys = "170.1.1"
+inkwell = { version = "0.5.0", features = ["llvm17-0"] }
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
+strip = true
+panic = "abort"
+incremental = true
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
